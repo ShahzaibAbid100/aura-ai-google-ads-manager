@@ -1,0 +1,66 @@
+@import "tailwindcss";
+
+@layer base {
+  body {
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  }
+  
+  h1, h2, h3, h4, .font-display {
+    font-family: 'Outfit', 'Plus Jakarta Sans', system-ui, sans-serif;
+  }
+}
+
+/* Custom scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(15, 17, 23, 0.6);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.28);
+}
+
+/* Signature Gradient Button matching attached screenshot */
+.btn-competitor-gradient {
+  background: linear-gradient(105deg, #a82bf0 0%, #ec268f 52%, #7928ca 100%);
+  color: #ffffff;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 4px 22px rgba(236, 38, 143, 0.38);
+}
+
+.btn-competitor-gradient:hover {
+  background: linear-gradient(105deg, #b73cfd 0%, #f43f5e 52%, #8b36e8 100%);
+  box-shadow: 0 6px 28px rgba(236, 38, 143, 0.55);
+  transform: translateY(-1px);
+}
+
+.btn-competitor-gradient:active {
+  transform: translateY(1px);
+  box-shadow: 0 2px 14px rgba(236, 38, 143, 0.3);
+}
+
+/* Glassmorphism surfaces */
+.glass-panel {
+  background: rgba(18, 20, 29, 0.82);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.glass-card {
+  background: rgba(23, 26, 38, 0.65);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.glass-card:hover {
+  border-color: rgba(236, 38, 143, 0.3);
+}

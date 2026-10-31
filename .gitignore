@@ -1,0 +1,59 @@
+# Local AI Model Weights
+/models/
+/model_weights/
+*.safetensors
+*.ckpt
+*.gguf
+*.pt
+*.pth
+*.onnx
+*.bin
+
+# Python Virtual Environments
+/.venv/
+/.venv311/
+/.venv-video/
+venv/
+
+# Python Temporary Files
+__pycache__/
+*.pyc
+.pytest_cache/
+.mypy_cache/
+
+# Frontend Dependencies
+node_modules/
+dist/
+
+# Secrets
+.env
+.env.*
+!.env.example
+!**/.env.example
+*.pem
+*.key
+client_secret*.json
+credentials.json
+token.json
+google-ads.yaml
+
+# Databases
+*.db
+*.db-*
+*.sqlite
+*.sqlite3
+
+# Generated Media
+/storage/
+/outputs/
+/backups/
+
+# Temporary Files
+*.zip
+*.bak
+*.log
+/_aura_patch/
+/_smoke_check/
+/_github_kit/
+/_aura_patch_backup*/
+/_aura_frontend_backup_*/

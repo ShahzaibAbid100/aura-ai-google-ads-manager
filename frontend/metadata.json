@@ -1,0 +1,8 @@
+{
+  "name": "AURA - Autonomous AI Google Ads Manager Agent",
+  "description": "Next-generation autonomous AI Google Ads & Creative Manager Agent. Launch multi-channel Performance Max campaigns, generate creatives, and scale ROI.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
