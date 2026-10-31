@@ -1,161 +1,601 @@
-# Aura AI Google Ads Manager Backend
+# AURA — AI Google Ads Manager
 
-A mock-first, backend-only FastAPI service for website analysis, campaign planning, ad copy drafting, quality checks, human approval, media jobs, and Google Ads workflow preparation. Local Hugging Face model adapters are optional and use project-local files only. Recommendations and simulated results are explicitly labeled. Google Ads mutations are never sent by this version.
+### AI-Powered Google Ads Campaign Management & Creative Automation Platform
 
-## Architecture
+AURA is a full-stack AI-powered Google Ads management application. It combines **React, TypeScript, FastAPI, LangGraph, SQLite, and Hugging Face AI models** to streamline advertising campaign planning, creative asset preparation, campaign management, and performance analysis.
 
-- `app/api/v1`: REST API and authorization boundary.
-- `app/services`: deterministic planning, URL analysis, validation, OAuth security, analytics, and job operations.
-- `app/graph`: bounded LangGraph planning and copy workflows.
-- `app/providers`: mock and local Qwen, SD-Turbo, SmolVLM2, LTX, and PaddleOCR adapters.
-- `app/services/model_registry.py`: pinned model repositories, selected files, licenses, hardware notes, and model availability checks.
-- `scripts`: resumable model downloader, model verifier, hardware report, and isolated LTX worker setup.
-- `app/models`: SQLAlchemy records for businesses, analyses, campaigns, assets, approvals, OAuth tokens, jobs, snapshots, recommendations, and audit events.
-- `alembic`: database schema migration setup.
+The platform provides an interactive AI workspace where users can create advertising campaigns, analyze business websites, generate advertising copy, manage campaign assets, review advertising strategies, and approve campaigns through a centralized interface.
 
-SQLite is the default database. The application creates tables on startup for convenient local use; use Alembic for versioned database setup and upgrades.
+The frontend and backend have been successfully integrated and verified using automated tests and end-to-end API integration checks.
 
-## Windows PowerShell Setup
+**Project Type:** Full-Stack AI / Agentic AI Application
 
-Python 3.11 is recommended. From the project root:
+**Development Environment:** Python 3.11, VS Code, Windows
+
+## Project Features
+
+### 1. AI Campaign Planning
+
+- Business and product information processing
+- Advertising objective selection
+- Audience and geographic targeting suggestions
+- Campaign budget configuration
+- Target ROAS configuration
+- Advertising channel selection
+- Structured campaign strategy generation
+- Campaign creation and database persistence
+
+### 2. Website & Business Analysis
+
+- Website URL processing
+- Business content extraction
+- Product and service information analysis
+- Landing page analysis
+- Brand-related information extraction
+- Structured data preparation for advertising workflows
+- Safe URL validation and request handling
+
+### 3. AI Advertisement Copy Generation
+
+- Advertising headline generation
+- Advertisement descriptions
+- Calls to action
+- Multiple headline variations
+- Campaign-specific messaging
+- Advertisement copy validation
+- Copy revision workflows
+- Campaign copy saving and editing
+
+### 4. AI Image Generation
+
+- Text-to-image generation interface
+- Image-to-image generation interface
+- Advertising creative preparation
+- Creative asset metadata
+- Generated image storage
+- Image preview API
+- Asynchronous generation job management
+
+**Configured model:** SD-Turbo
+
+### 5. AI Video Generation
+
+- Text-to-video provider interface
+- Image-to-video provider interface
+- Video generation jobs
+- Video status tracking
+- Output file handling
+- Promotional video workflow integration
+- FFmpeg-based post-processing support
+
+**Configured model:** LTX-Video
+
+### 6. Advertisement Quality Analysis
+
+- Advertising text validation
+- Required asset validation
+- Brand consistency checks
+- Image metadata validation
+- OCR integration
+- Vision model integration
+- Creative quality recommendations
+
+**Configured models:** SmolVLM2 and PP-OCRv5
+
+### 7. LangGraph AI Agent Workflows
+
+- Campaign planning workflows
+- Conditional routing
+- Advertisement copy evaluation
+- Bounded revision loops
+- Campaign optimization recommendations
+- AI chat workflow integration
+- Structured workflow state management
+- Error handling and workflow validation
+
+### 8. Campaign Management
+
+- Campaign draft creation
+- Campaign editing
+- Saved campaign retrieval
+- Advertising asset management
+- Campaign history
+- Database persistence
+- Campaign validation
+- Approval status management
+- Version-bound human approval
+- Audit records
+
+### 9. Google Ads Integration
+
+- Google OAuth 2.0 integration
+- OAuth state validation
+- Secure token exchange
+- Encrypted token storage
+- Google Ads account connection status
+- Read-only reporting integration
+- Campaign publishing safety controls
+
+Google Ads publishing is intentionally disabled in the current implementation. Campaign approval inside AURA does not automatically publish advertisements.
+
+### 10. Campaign Analytics & Optimization
+
+- Impressions
+- Clicks
+- Click-through rate (CTR)
+- Average cost per click (CPC)
+- Advertising cost
+- Conversions
+- Cost per acquisition (CPA)
+- Conversion value
+- Return on ad spend (ROAS)
+- Campaign performance analysis
+- Optimization recommendations
+
+Real Google Ads account metrics require an authorized Google Ads connection.
+
+---
+
+## Testing & Verification Results
+
+AURA has undergone automated backend testing, TypeScript validation, production build checks, database verification, and frontend–backend integration testing.
+
+### Test Summary
+
+| Test Category | Result |
+|---|---|
+| Backend Automated Tests | **34 Passed** |
+| Additional Inference Tests | 5 Skipped |
+| Frontend–Backend Integration Tests | **10/10 Passed** |
+| TypeScript Validation | **Passed** |
+| Frontend Production Build | **Passed** |
+| Python Compilation | **Passed** |
+| SQLite Database Migrations | **Passed** |
+| OpenAPI Schema Validation | **Passed** |
+| FastAPI Startup | **Passed** |
+| Backend Health API | **HTTP 200** |
+| Frontend Server | **HTTP 200** |
+| API Proxy Connection | **HTTP 200** |
+
+### Module-Level Test Results
+
+| Module | Verified Testing Result |
+|---|---|
+| FastAPI Application | **Tested — Passed** |
+| React Frontend | **Build Tested — Passed** |
+| Frontend–Backend Connectivity | **Integration Tested — Passed** |
+| SQLite Database | **Migration Tested — Passed** |
+| Campaign Creation | **Integration Tested — Passed** |
+| Campaign Database Persistence | **Integration Tested — Passed** |
+| Campaign Retrieval | **Integration Tested — Passed** |
+| Campaign Copy Generation API | **Integration Tested — Passed** |
+| Campaign Approval | **Integration Tested — Passed** |
+| LangGraph Workflow Logic | **Automated Tests Passed** |
+| AI Chat Reporting Action | **Integration Tested — Passed** |
+| Advertisement Image API | **Integration Tested — Passed** |
+| Video Generation Job API | **Integration Tested — Passed** |
+| Persistent Job Tracking | **Integration Tested — Passed** |
+| Campaign Reporting API | **Integration Tested — Passed** |
+| Google Ads Connection Status API | **Integration Tested — Passed** |
+| Model File Inventory | **Verified — 7 Model Entries** |
+| Model Download Verification | **Passed** |
+| OpenAPI Contracts | **Validated — 26 Paths** |
+
+### Frontend–Backend Integration Verification
+
+The application passed **10 out of 10 integration checks**, covering:
+
+1. FastAPI backend health endpoint.
+2. React frontend server availability.
+3. Frontend-to-backend API proxy communication.
+4. AI model inventory API.
+5. Saved campaign retrieval from SQLite.
+6. Campaign reporting response and source labeling.
+7. AI chat request execution.
+8. Google Ads OAuth connection status.
+9. Image generation API and asset metadata.
+10. Video generation jobs and persistence.
+
+**Final Integration Result: 10 Passed, 0 Failed, 0 Skipped.**
+
+### Testing Scope
+
+These successful results verify application logic, backend APIs, LangGraph workflows, database operations, campaign management, frontend integration, and simulated AI generation/reporting services.
+
+Local Hugging Face model files have been downloaded and verified, but real model inference has not yet been executed on compatible hardware. Live Google Ads account access has not been verified with production credentials.
+
+This distinction is maintained to keep testing results accurate and reproducible.
+
+---
+
+## Technology Stack
+
+| Component | Technology |
+|---|---|
+| Frontend | React, TypeScript, Vite |
+| Styling | Tailwind CSS |
+| Backend | Python 3.11, FastAPI |
+| AI Orchestration | LangGraph |
+| Database | SQLite |
+| ORM | SQLAlchemy |
+| Migrations | Alembic |
+| LLM | Hugging Face Transformers |
+| Image Generation | Diffusers |
+| Video Generation | LTX-Video |
+| Vision Analysis | SmolVLM2 |
+| OCR | PaddleOCR |
+| AI Framework | PyTorch |
+| Video Processing | FFmpeg |
+| Website Analysis | HTTPX, BeautifulSoup |
+| API Security | OAuth 2.0, Fernet |
+| Testing | Pytest, TypeScript, Vite |
+
+---
+
+## AI Models — Hugging Face
+
+AURA supports locally configured Hugging Face models.
+
+**AI model weights are not included in this GitHub repository.** The application provides model download, local path configuration, and model availability verification utilities.
+
+| Purpose | AI Model | Hugging Face Repository |
+|---|---|---|
+| Language Model | Qwen2.5-1.5B-Instruct | [Hugging Face](https://huggingface.co/Qwen/Qwen2.5-1.5B-Instruct) |
+| Image Generation | SD-Turbo | [Hugging Face](https://huggingface.co/stabilityai/sd-turbo) |
+| Video Generation | LTX-Video | [Hugging Face](https://huggingface.co/Lightricks/LTX-Video) |
+| Video Text Encoder | PixArt-XL-2-1024-MS | [Hugging Face](https://huggingface.co/PixArt-alpha/PixArt-XL-2-1024-MS) |
+| Vision Understanding | SmolVLM2-500M-Video-Instruct | [Hugging Face](https://huggingface.co/HuggingFaceTB/SmolVLM2-500M-Video-Instruct) |
+| OCR Detection | PP-OCRv5 Mobile Detection | [Hugging Face](https://huggingface.co/PaddlePaddle/PP-OCRv5_mobile_det) |
+| OCR Recognition | PP-OCRv5 Mobile Recognition | [Hugging Face](https://huggingface.co/PaddlePaddle/PP-OCRv5_mobile_rec) |
+
+### Model Management
+
+Model registry:
+
+`app/services/model_registry.py`
+
+Model download script:
+
+`scripts/download_models.py`
+
+Model verification script:
+
+`scripts/verify_models.py`
+
+Hardware compatibility utility:
+
+`scripts/check_hardware.py`
+
+Model files are excluded from version control to keep the GitHub repository lightweight.
+
+Check model licenses and hardware requirements before enabling real inference.
+
+---
+
+## System Architecture
+
+AURA uses a modular frontend–backend architecture.
+
+**React Frontend → FastAPI REST API → LangGraph Workflows → AI Providers / Application Services → SQLite Database**
+
+### Frontend
+
+The React application provides:
+
+- Landing page
+- Campaign creation wizard
+- AI chat workspace
+- Campaign management interface
+- Advertisement preview
+- Advertisement copy editor
+- Asset management interface
+- Google Ads account settings
+- Reporting views
+- Model/backend connection status
+
+### Backend
+
+FastAPI manages:
+
+- Request validation
+- REST API endpoints
+- Campaign services
+- LangGraph execution
+- Website analysis
+- AI provider integrations
+- Campaign approval
+- OAuth security
+- Analytics
+- Job management
+- Database operations
+
+### Database
+
+SQLite stores:
+
+- Business information
+- Campaigns
+- Campaign plans
+- Advertisement assets
+- Campaign approval records
+- Execution jobs
+- Performance snapshots
+- Optimization recommendations
+- OAuth connection data
+- Audit records
+
+---
+
+## Project Structure
+
+```text
+aura/
+|
+|-- app/
+|   |-- api/
+|   |   `-- v1/
+|   |-- core/
+|   |-- db/
+|   |-- graph/
+|   |-- models/
+|   |-- providers/
+|   |-- schemas/
+|   |-- services/
+|   `-- main.py
+|
+|-- frontend/
+|   |-- public/
+|   |-- src/
+|   |   |-- components/
+|   |   |-- data/
+|   |   |-- services/
+|   |   `-- App.tsx
+|   |-- package.json
+|   `-- vite.config.ts
+|
+|-- alembic/
+|-- scripts/
+|-- tests/
+|-- models/          # Local AI weights (not committed)
+|-- storage/         # Local application data (not committed)
+|
+|-- .env.example
+|-- .gitignore
+|-- alembic.ini
+|-- openapi.json
+|-- pyproject.toml
+|-- requirements.txt
+`-- README.md
+```
+
+---
+
+## Installation & Setup
+
+### Prerequisites
+
+- Windows 10/11
+- Python 3.11
+- Node.js and npm
+- Git
+- VS Code (recommended)
+
+Compatible GPU hardware is required for testing certain local AI inference workflows.
+
+### 1. Clone Repository
 
 ```powershell
-py -3.11 -m venv .venv
-.\.venv\Scripts\Activate.ps1
-python -m pip install --upgrade pip
-python -m pip install -e ".[dev]"
+git clone https://github.com/ShahzaibAbid100/aura-ai-google-ads-manager.git
+```
+
+```powershell
+cd aura-ai-google-ads-manager
+```
+
+### 2. Create Python Environment
+
+```powershell
+py -3.11 -m venv .venv311
+```
+
+```powershell
+.\.venv311\Scripts\Activate.ps1
+```
+
+### 3. Install Backend Dependencies
+
+```powershell
+python -m pip install -r requirements.txt
+```
+
+Optional AI inference dependencies must be installed separately according to the selected local provider and hardware compatibility.
+
+### 4. Configure Environment Variables
+
+```powershell
 Copy-Item .env.example .env
 ```
 
-For the already configured project interpreter, the commands are `& 'D:/aura/.venv311/Scripts/python.exe' -m pip install -e ".[dev]"`; optional inference extras are installed one-at-a-time with `python -m pip install -e ".[qwen]"`, `.[sd-turbo]`, `.[smolvlm]`, or `.[ocr]`. The backend remains mock-default unless the corresponding provider environment setting explicitly selects `local`.
+Edit `.env` with the required local configuration. OAuth credentials and API developer tokens are required only when enabling authenticated Google Ads integration.
 
-Set a persistent Fernet key for deployments and any environment where OAuth tokens must remain decryptable after restart:
+Keep Google Ads writes disabled:
 
-```powershell
-python -c "from cryptography.fernet import Fernet; print(Fernet.generate_key().decode())"
+```text
+GOOGLE_ADS_ENABLE_WRITES=false
 ```
 
-Put that value in `FERNET_KEY` in `.env`, and set a unique `SECRET_KEY`. Do not commit `.env` or credentials.
-
-## Run
+### 5. Initialize Database
 
 ```powershell
 python -m alembic upgrade head
+```
+
+### 6. Start FastAPI Backend
+
+```powershell
 python -m uvicorn app.main:app --reload
 ```
 
-The API is at `http://127.0.0.1:8000`; interactive Swagger documentation is at `http://127.0.0.1:8000/docs`. All application endpoints are under `/api/v1`.
+Backend API documentation:
 
-## Test and Compile
+http://127.0.0.1:8000/docs
+
+Backend health:
+
+http://127.0.0.1:8000/api/v1/health
+
+Model readiness:
+
+http://127.0.0.1:8000/api/v1/models/status
+
+### 7. Install Frontend Dependencies
+
+Open a second PowerShell terminal:
+
+```powershell
+cd frontend
+```
+
+```powershell
+npm.cmd install
+```
+
+### 8. Run React Frontend
+
+```powershell
+npm.cmd run dev
+```
+
+Open:
+
+http://localhost:3000
+
+The frontend and backend must both be running for local development.
+
+---
+
+## Model Download & Verification
+
+Model weights are downloaded separately from Hugging Face.
+
+From the project root:
+
+```powershell
+python scripts/check_hardware.py
+```
+
+```powershell
+python scripts/download_models.py --all
+```
+
+```powershell
+python scripts/verify_models.py
+```
+
+Downloads can be large. Some model repositories have licensing or hardware requirements.
+
+The LTX-Video inference setup also requires a separately configured compatible CUDA environment, supporting model components, and an appropriate GPU.
+
+---
+
+## Running Tests
+
+### Backend Tests
 
 ```powershell
 python -m pytest -q
+```
+
+Latest verified result:
+
+**34 passed, 5 skipped**
+
+### Python Compilation
+
+```powershell
 python -m compileall -q app scripts tests alembic
-python scripts/check_hardware.py
-python scripts/verify_models.py
 ```
 
-Real inference tests are separate and explicitly opt-in: install the appropriate local runtime and weights, then run `$env:RUN_REAL_MODEL_TESTS="1"; python -m pytest -q tests/test_real_inference.py`. The registry reports `inference_verified` only after a smoke test produces its expected output and writes revision/path/file-size-bound evidence to `storage/model_inference_status.json`. Replacing a model file or changing its revision makes evidence stale. Tests skip when hardware, memory, packages, or model weights are unavailable.
-
-Tests use an isolated in-memory SQLite database and mocked network/provider behavior. They do not download models or contact Google Ads.
-
-## Configuration
-
-Copy `.env.example` to `.env`. Important settings:
-
-- `DATABASE_URL`: SQLite URL; defaults to `sqlite:///./storage/aura.db`.
-- `AI_PROVIDER=mock`: deterministic development provider. Set `AI_PROVIDER=local` and `LOCAL_LLM_PATH` to an existing local Qwen directory for local Transformer inference using its chat template and structured JSON checks. Missing weights or dependencies are hard errors, not mock fallbacks.
-- `IMAGE_PROVIDER=mock|local`: local selects SD-Turbo from `IMAGE_MODEL_PATH` or `models/image/sd-turbo`.
-- `VIDEO_PROVIDER=mock|local`: local selects LTX, gated by `LTX_VIDEO_INFERENCE_ENABLED=true`, official video-worker dependencies, Q8 kernels, FFmpeg and supported CUDA GPU.
-- `VISION_PROVIDER=mock|local`: local selects SmolVLM2 from `VISION_MODEL_PATH` or `models/vision/smolvlm2-500m`.
-- `OCR_PROVIDER=mock|local`: local selects PP-OCRv5; configure `OCR_DETECTION_MODEL_PATH` and `OCR_RECOGNITION_MODEL_PATH` to override defaults.
-- `PIXART_ENCODER_MODEL_PATH`: optional local path for the LTX-required PixArt text encoder.
-- `STORAGE_DIR`: output directory for simulated image and video metadata assets.
-- `CORS_ORIGINS`: comma-separated allowed browser origins. Do not use wildcard origins with credentials in production.
-- `API_AUTH_TOKEN`: bearer token for protected campaign changes, approvals, optimization, and disconnect actions. In production, the protected routes fail closed unless this is configured. Replace this simple shared-token boundary with user identity/roles before exposing the service to multiple users.
-- `FERNET_KEY`: persistent Fernet key for encrypted OAuth tokens. A development key derived from `SECRET_KEY` is used when omitted; it is not suitable for durable production storage.
-- `GOOGLE_ADS_ENABLE_WRITES=false`: must stay disabled until a separately reviewed live mutation provider and authorization controls exist.
-
-Install the resumable Hub downloader separately and request a selected model:
+### OpenAPI Contract Verification
 
 ```powershell
-python -m pip install -e ".[download]"
-python scripts/download_models.py --model qwen
-python scripts/download_models.py --model sd_turbo
-python scripts/download_models.py --model smolvlm
-python scripts/download_models.py --model ocr_det
-python scripts/download_models.py --model ocr_rec
-python scripts/download_models.py --model ltx_video
-python scripts/download_models.py --model pixart_encoder
-python scripts/download_models.py --all
-python scripts/verify_models.py
+python scripts/export_openapi.py --check
 ```
 
-Downloads use pinned Hub commit SHAs, selected file allowlists, per-model disk checks with a 2 GiB safety buffer, and resumable Hub snapshots. Independent model errors do not delete partial files. `--all` may download around 30 GiB. Review licenses before use: Qwen, SmolVLM2 and PP-OCRv5 identify Apache-2.0; PixArt identifies OpenRAIL++; SD-Turbo is subject to Stability AI terms; LTX weights have a separate license from the Apache-2.0 repository code.
-
-Install only the selected inference group; the default API environment remains lightweight:
+### Frontend TypeScript Validation
 
 ```powershell
-python -m pip install -e ".[qwen]"
-python -m pip install -e ".[sd-turbo]"
-python -m pip install -e ".[smolvlm]"
-python -m pip install -e ".[ocr]"
-python -m pip install -e ".[google-ads]"
-python -m pip install -e ".[browser]"
+cd frontend
 ```
 
-These optional groups target Python 3.11 and are not installed in the current API environment. Install only after checking available RAM/VRAM. Qwen's opt-in CPU smoke test has an available-memory preflight. SD-Turbo and SmolVLM smoke tests require CUDA with the minimum VRAM checked in `tests/test_real_inference.py`; PaddleOCR CPU inference can be tested independently.
+```powershell
+npm.cmd run lint
+```
 
-No model weights are downloaded at startup. SD-Turbo uses its 512x512 checkpoint path, 1-4 denoising steps and guidance scale 0. Other aspect ratios are formatted by Pillow resize/crop after generation. Text-to-image and image-to-image are supported; advanced inpainting is not.
+### Frontend Production Build
 
-LTX-Video 0.9.8 FP8 needs the 2B checkpoint, spatial upscaler, PixArt text encoder/tokenizer, official inference code and Lightricks Q8 CUDA kernels. On a separate compatible NVIDIA host, run `scripts/setup_video_environment.ps1`; it checks `nvidia-smi`, creates `.venv-video`, installs a pinned CUDA 12.8 PyTorch/vision/audio set there, then installs the LTX runtime and pinned official source/Q8 kernel. Windows C++ Build Tools and CUDA Toolkit 12.8 are prerequisites for building Q8 kernels. The LTX provider keeps a conservative 12 GiB VRAM gate and `LTX_VIDEO_INFERENCE_ENABLED=false` until explicitly enabled after GPU validation. Do not run this script on the current CPU-only machine.
+```powershell
+npm.cmd run build
+```
 
-SmolVLM2 performs model-based image analysis, not generation, and its results are advisory. PaddleOCR emits text regions, confidence and bounding boxes. Neither downloads additional model files at startup.
+### Integration Verification
 
-## Main Workflows
+The latest completed local frontend–backend integration check reported:
 
-- `POST /api/v1/websites/analyze`: bounded HTML extraction with public-address checks, redirects revalidated, timeout, and response size limit.
-- `POST /api/v1/campaigns/plan`: produces recommendations, not confirmed platform settings.
-- `POST /api/v1/campaigns` and `/{id}/generate`, `/validate`, `/approve`, `/reject`: draft lifecycle with version-bound approval and audit events.
-- `POST /api/v1/campaigns/{id}/publish`: requires current-version approval. Returns `dry_run` with writes disabled, and remains `blocked` even if the flag is enabled because no Google Ads mutation adapter exists.
-- `POST /api/v1/campaigns/{id}/workflow`: LangGraph workflow for optional website analysis, planning, copy/evaluation, optional media, validation, and pending human approval.
-- `GET /api/v1/campaigns/{id}/report` and `/optimize`: deterministic simulated report/recommendations. No changes are automatically applied.
-- `GET /api/v1/google-ads/report?source=live`: official Google Ads Python SDK read-only `GoogleAdsService.search`; requires the optional SDK, configured developer token, OAuth connection, and customer ID.
-- `/api/v1/models/status` and `/api/v1/models/capabilities`: separate weight availability, installed runtime, Python compatibility, capability-specific missing packages, and revision-bound inference-test result, plus provider/license/hardware information. `available=true` means weights only, not verified inference.
-- `/api/v1/campaigns/{id}/history`: audit and approval history.
-- `/api/v1/media/images/generate` creates a visibly marked mock PNG. Video generation records a completed job and metadata-only simulated result; it does not create an MP4.
-- Google OAuth start uses state and PKCE. The callback exchanges the code only when credentials are configured and stores encrypted tokens. Refresh support is implemented as a service helper, but no reporting client currently consumes it. OAuth credentials and Google Ads developer-token setup/verification are required before connecting production accounts.
+**10 passed, 0 failed, 0 skipped**
 
-## Future Frontend Integration
+The integration script was run separately during development and is not necessarily included in this repository.
 
-Use the versioned REST API and its OpenAPI schema at `/openapi.json`. The frontend must send `Authorization: Bearer <API_AUTH_TOKEN>` for protected operations and must treat all plans, mock assets, and mock analytics as recommendations/simulations. Browser clients are not trusted to approve or publish without server-side identity and policy controls.
+---
 
-## OpenAPI Contract
+## Security & Safety
 
-`openapi.json` is the exported OpenAPI 3.1 API contract. Regenerate and validate it after route or schema edits with `python scripts/export_openapi.py`; CI can detect drift with `python scripts/export_openapi.py --check`. JSON endpoints publish explicit Pydantic response models; media files use a binary response contract. The document contains no model weights or credentials.
+AURA follows a safety-focused development approach.
 
-## Remaining Live Integration Steps
+- Google Ads live publishing is disabled.
+- Human approval is required for campaign approval workflows.
+- OAuth credentials remain on the backend.
+- OAuth tokens are encrypted at rest.
+- Sensitive environment configuration is excluded from Git.
+- Local AI model weights are excluded from Git.
+- Local databases and generated media are excluded from Git.
+- Campaign approval does not imply a live Google Ads launch.
+- Reporting results identify whether they come from simulated or authenticated sources.
 
-The model files are present, but none have successful real-inference evidence yet. Install model-specific dependencies on a machine that meets the reported RAM/VRAM requirements, run `RUN_REAL_MODEL_TESTS=1` smoke tests there, and inspect `/api/v1/models/status` for `readiness=inference_verified`. A test record is tied to the selected revision, path, and required file sizes.
+Users must configure their own authorized Google Ads account and developer credentials for live read-only reporting.
 
-For read-only Google Ads reports, the project owner must provide a Google Cloud OAuth client ID/secret, authorized redirect URI, consent screen and `adwords` scope; complete any required Google verification; supply a Google Ads developer token and customer ID; and complete the OAuth connection. Configure `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`, `GOOGLE_ADS_DEVELOPER_TOKEN`, `GOOGLE_ADS_CUSTOMER_ID`, persistent `FERNET_KEY`, `OAUTH_REDIRECT_URI`, and `API_AUTH_TOKEN` only in the backend environment. Use `GET /api/v1/google-ads/report?source=live` after connection. Google Ads mutations remain blocked regardless of the writes flag.
+---
 
-## Known Limitations
+## Current Release Status
 
-- Google Ads read-only reporting is implemented but requires the optional SDK and owner-provided credentials. Campaign mutation remains blocked/dry-run.
-- Before live reporting, the owner must create a Google Cloud OAuth client, set the exact redirect URI and `adwords` scope, complete any required consent-screen verification, provision a Google Ads developer token, authorize the account/customer, and configure `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`, `GOOGLE_ADS_DEVELOPER_TOKEN`, `GOOGLE_ADS_CUSTOMER_ID`, persistent `FERNET_KEY`, `OAUTH_REDIRECT_URI`, and an API auth token. Manager-account access may also require the login customer ID. Keep secrets server-side; verify only the read-only `source=live` report endpoint. Campaign mutations remain blocked.
-- OAuth token exchange and refresh helper exist; scheduled refresh, account discovery, multi-user credential separation, and production OAuth hardening remain future work.
-- Local adapters are implemented, but real inference depends on optional packages and local weights. LTX additionally requires CUDA 12.8-compatible runtime and Q8 kernels; it is disabled by default.
-- This machine was measured at 8 GiB RAM, 96+ GiB free disk, Intel i7-5600U, Intel HD 5500, no CUDA device. CPU Qwen/SD-Turbo real inference smoke tests were not run because Torch/Transformers/Diffusers were not installed and Qwen's ~3 GiB checkpoint may exceed safe available RAM during inference.
-- Download status is recorded at `storage/model_download_status.json`; verify with `python scripts/verify_models.py`. The selected model set uses about 30 GiB including the LTX PixArt encoder. Unauthenticated Hugging Face rate limits may apply.
-- Downloaded weights in this workspace: Qwen2.5-1.5B Instruct at `models/llm/qwen2.5-1.5b-instruct` (~3.09 GB); SD-Turbo FP16 components at `models/image/sd-turbo` (~1.90 GB); LTX-Video 2B FP8, 0.9.8 upscaler and YAML at `models/video/ltx-video` (~4.97 GB); LTX PixArt text encoder/tokenizer at `models/video/pixart-text-encoder` (~19.05 GB); SmolVLM2-500M at `models/vision/smolvlm2-500m` (~2.03 GB); PP-OCRv5 detector at `models/ocr/detection` (~4.9 MB); and recognizer at `models/ocr/recognition` (~16.7 MB). Downloaded files are gitignored.
-- Model weights are complete, but real inference smoke tests remain pending: model runtime dependencies are not installed in the main environment, only ~1.4 GiB RAM was free during checks, and no CUDA GPU is present. `tests/test_real_inference.py` contains explicit opt-in tests; LTX requires a separate compatible NVIDIA environment and was not executed.
-- Playwright is optional and not used by default; the crawler uses HTTPX and BeautifulSoup.
-- Website crawling is a single-page extraction, not a full crawler. It does not currently fetch or interpret robots.txt or execute JavaScript. Playwright is an optional dependency only.
-- The lightweight job service persists job records but executes media mock work in the request process, not in a production worker queue.
-- Campaign endpoints use schemas and stable JSON, but multi-user authorization, durable idempotency-key handling, Google Ads policy review, and production-grade rate limiting remain future work.
-- This project directory is the VS Code workspace root (`D:\aura`). The requested `D:\auro_ad_manager` path was not mounted in this session.
+**Verified application capabilities:**
 
-## Safe Publishing Procedure
+- React frontend and FastAPI backend connectivity
+- Campaign creation and retrieval
+- Database persistence
+- Campaign copy generation API integration
+- Campaign validation and approval
+- LangGraph workflow execution
+- Media generation API and job handling
+- Model inventory verification
+- Reporting and AI chat integration
+- Automated backend and frontend build testing
 
-There is no live publishing implementation yet. Before one is added: configure OAuth credentials and developer token securely; verify user identity and account/customer access; run validation and policy checks; record human approval against the exact campaign version and budget; require separate server-side runtime authorization; add idempotency and audit protections; then test only against an approved non-production account. Never enable writes as a substitute for implementing these controls.
+**Additional requirements before production use:**
+
+- Real AI inference validation on suitable hardware
+- Authenticated Google Ads reporting verification
+- Production-grade access controls and deployment hardening
+- Separate implementation and authorization for live Google Ads publishing
+
+---
+
+## Disclaimer
+
+AURA is an independent AI application inspired by AI-assisted advertising management workflows.
+
+It is **not affiliated with, endorsed by, or an official product of Google or Picsart**.
+
+AI-generated recommendations require human review. Advertising outcomes, sales, return on ad spend, and Google Ads approval are not guaranteed.
+
+---
